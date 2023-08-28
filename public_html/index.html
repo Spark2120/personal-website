@@ -168,54 +168,56 @@
 
     <!-- contact section -->
     <section class="section" id="contact">
-        <div class="container text-center">
+        <div class="container text-center"> 
             <p class="section-subtitle">How can you communicate?</p>
-            <h6 class="section-title mb-5">Contact Me (currently down)</h6>
-            <p class="section-subtitle">Feel free to email me at willypskahan@gmail.com well the system is down. I appreicate your patience.</p>
+            <h6 class="section-title mb-5">Contact Me</h6>
             <!-- contact form -->
-
-            <br>
-            <br>
-            <form onsubmit="sendEmail()" class="contact-form col-md-10 col-lg-8 m-auto">
+            <form id="form" class="contact-form col-md-10 col-lg-8 m-auto">
                 <div class="form-row">
                     <div class="form-group col-sm-6">
-                        <input type="text" size="50" class="form-control" placeholder="Your Name" required>                 
+                        <input type="text" size="50" class="form-control"name="name" id="name"  placeholder="Your Name" required>                
                     </div>
                     <div class="form-group col-sm-6">
-                        <input type="email" class="form-control" placeholder="Enter Email"requried>                 
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email"requried>              
                     </div>
                     <div class="form-group col-sm-12">
                         <textarea name="comment" id="comment" rows="6"
                         class="form-control" placeholder="Write Something"></textarea>
                     </div>
                     <div class="form-group col-sm-12 mt-3">
-                        <input type="submit" value="Send Message" class="btn btn-outline-primary rounded">                  
-                    </div>
-                </div>  
-            </form><!-- end of contact form -->
-        </div><!-- end of container -->
-        <script src="https://smtpjs.com/v3/smtp.js">
-        </script>
+                      <input type="submit" value="Send Message" id="button" class="btn btn-outline-primary rounded">
+                  </div>
+              </form>
+
+              <script type="text/javascript"
+              src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+            
+            <script type="text/javascript">
+              emailjs.init('qKFOvpUbKKhtE4BRT')
+            </script>
+
 <script>
+    const btn = document.getElementById('button');
 
-function sendEmail(){
-    Email.send({
-    Host : "smtp.elasticemail.com",
-    Port : "2525",
-    Username : "willypskahan@gmail.com",
-    Password : "6794D0C63796BA328CFF385C7C6A3A87B773",
-    To : 'skahanwilliam@gmail.com',
-    From : document.getElementById("email").value,
-    Subject : "New Contact Form Enquiry",
-    Body : "And this is the body"
-}).then(
-  message => alert(message)
-);
+document.getElementById('form')
+ .addEventListener('submit', function(event) {
+   event.preventDefault();
 
-}
+   btn.value = 'Sending...';
 
-</script>
+   const serviceID = 'default_service';
+   const templateID = 'template_g7cfb67';
 
+   emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+      btn.value = 'Send Email';
+      alert('Sent!');
+    }, (err) => {
+      btn.value = 'Send Email';
+      alert(JSON.stringify(err));
+    });
+});
+  </script>
 
     </section><!-- end of contact section -->
 
